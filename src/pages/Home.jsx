@@ -127,19 +127,26 @@ const Home = () => {
   const handlesubmit = e => {
     e.preventDefault();
 
-    if (step === 3 && (values.countryCode === '' || values.phoneNumber === '')) {
+    if (
+      step === 3 &&
+      (values.countryCode === '' ||
+        values.phoneNumber === '' ||
+        !document.getElementById('formid').checkValidity())
+    ) {
       setrequired(true);
     } else {
       setrequired(false);
       const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+
         body: JSON.stringify(values),
       };
-      fetch('https://a0329568-71ba-47b1-b1af-8da6856391c7.mock.pstmn.io/submit', requestOptions)
+      // https://a0329568-71ba-47b1-b1af-8da6856391c7.mock.pstmn.io/submit
+      fetch('https://codebuddy.review/submit', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.message) {
+            console.log(data);
             alert(`${data.message}${JSON.stringify(values)}`);
             navigate('/posts');
           } else {
@@ -156,10 +163,12 @@ const Home = () => {
   };
 
   const handlenext = e => {
+    setFocused(false);
     e.preventDefault();
     if (
       (step === 1 && (values.email === '' || values.password === '')) ||
-      (step === 2 && (values.firstname === '' || values.address === ''))
+      (step === 2 && (values.firstname === '' || values.address === '')) ||
+      !document.getElementById('formid').checkValidity()
     ) {
       setrequired(true);
     } else {
@@ -183,7 +192,7 @@ const Home = () => {
   console.log(values);
   return (
     <div className="app">
-      <form>
+      <form id="formid">
         <Pages setStep={setStep} />
         <h2>Register</h2>
         {step === 1 &&

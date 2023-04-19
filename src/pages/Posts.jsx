@@ -16,12 +16,12 @@ const Posts = () => {
       ...preState,
       loading: true,
     }));
-    await fetch('https://a0329568-71ba-47b1-b1af-8da6856391c7.mock.pstmn.io/posts')
+    await fetch('https://codebuddy.review/posts')
       .then(res => res.json())
       .then(response => {
-        console.log(response.posts);
+        console.log(response.data.posts);
         setState(() => ({
-          posts: response.posts,
+          posts: response.data.posts,
           loading: false,
         }));
       })
@@ -61,9 +61,9 @@ const Posts = () => {
     <div>
       <h2>POSTS</h2>
       <div className="row">
-        {state.posts.map(data => (
+        {state.posts.map((data, index) => (
           <div className="col-lg-4 col-md-6 col-sm-12">
-            <div className="tile" id="singapore">
+            <div className="tile" id={index}>
               <div className="tile-text">
                 <img alt="cover" className="tile img  img-responsive" src={data.image} />
                 <div className="author">
@@ -72,7 +72,7 @@ const Posts = () => {
                   </h4>
                   <img alt="author" className="avatar" src={data.avatar} />
                 </div>
-                <p>{data.writeup}</p>
+                <p className="description">{data.writeup}</p>
               </div>
             </div>
           </div>

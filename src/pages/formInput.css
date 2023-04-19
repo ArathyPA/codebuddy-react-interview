@@ -16,10 +16,10 @@ span{
     padding: 2px;
     display:none;
 }
-input:invalid {
+input:invalid[data-focused="true"]  {
     border:1px solid red;
 }
-input:invalid ~ span{
+input:invalid[data-focused="true"] ~ span{
 display: block;
 }
 
